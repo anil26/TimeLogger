@@ -24,7 +24,6 @@ class TimeLine extends React.Component{
   }
   componentWillReceiveProps(nextProps){
     console.log(nextProps);
-    debugger;
     console.log("nextprops received");
     this.setState({
       items : nextProps.items,
@@ -37,8 +36,6 @@ class TimeLine extends React.Component{
     });
   }
   createItems(items){
-    debugger;
-    // var items=this.state.items;
     var items=items;
     console.log("call createitems");
     console.log(items);
@@ -81,7 +78,6 @@ class TimeLine extends React.Component{
     });
   }
   onItemClick(itemId,key){
-    debugger;
     var that=this;
     this.setState({
       remove : true,
@@ -105,9 +101,6 @@ class TimeLine extends React.Component{
     var projectName=ReactDOM.findDOMNode(this.refs.project).value;
     var fromTimeString=this.refs.from.getValue();
     var fromTime= new Date(fromTimeString);
-
-    // var fromTime=this.state.time;
-    debugger;
     var year=fromTime.getFullYear();
     var fromTimeInISO=fromTime.toISOString();
     var toTimeString=this.refs.to.getValue();
@@ -136,13 +129,6 @@ class TimeLine extends React.Component{
     });
   }
   render(){
-    debugger;
-    // console.log("rendered timeline");
-    // console.log("item list is")
-    // this.createItems();
-    // console.log("groulistis");
-    // this.createGroups();
-    console.log("rendered timeline");
     return (
       <div>
         <PageHeader>TimeLogger App</PageHeader>

@@ -23,7 +23,6 @@ class App extends React.Component{
 }
 
 const mapStateToProps = (state) => {
-  debugger;
   return {
   auth : state.auth,
   data: state.data,

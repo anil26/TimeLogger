@@ -43,7 +43,6 @@ const removeToken=(auth)=>{
   }
 }
 const setData=(data)=>{
-  debugger;
   return {
     type : loggerConstants.SET_DATA,
     payload : {
@@ -94,7 +93,6 @@ const login=(email,password)=>{
 }
 
 const setSchedule=(year,fromTimeInISO,toTimeInISO,hours,projectName,groupId)=>{
-  debugger;
   return function(dispatch){
     var bookingToBeSet={
       "from" : fromTimeInISO,
@@ -118,11 +116,6 @@ const setSchedule=(year,fromTimeInISO,toTimeInISO,hours,projectName,groupId)=>{
             "group": groupId
           }
         }
-        debugger;
-        dispatch(pushData(obj));
-// console.log(year);
-//         getItems(year);
-//         console.log("updated");
       }).
       catch(function(error){
         console.log(error);
@@ -132,9 +125,7 @@ const setSchedule=(year,fromTimeInISO,toTimeInISO,hours,projectName,groupId)=>{
 
 
 const removeSchedule=(itemId)=>{
-  // return function(dispatch){
-  //     firebase.database().ref('/year'+"/" + )
-  // }
+
 }
 
 const getItems=(year)=>{
@@ -150,7 +141,6 @@ const getItems=(year)=>{
 }
 
 const getUsers=()=>{
-  debugger;
   return function(dispatch){
     firebase.database().ref('/users').once('value').then(function(snapshot){
       var users=snapshot.val();
