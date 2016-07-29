@@ -6,7 +6,6 @@ class LogOut extends React.Component{
   onClick(){
     this.props.logout();
   }
-
   render(){
     return (
       <div className="logout">

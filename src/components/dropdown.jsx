@@ -14,14 +14,18 @@ class YearDropDown extends React.Component{
       searchable : false
     }
   }
+
   updateValue(newValue){
     this.setState({
       selectValue : newValue
     })
+    this.props.setCurrentYear(newValue);
   }
+
   focusStateSelect () {
     this.refs.yearSelect.focus();
   }
+
   render(){
     var options=years;
     return(

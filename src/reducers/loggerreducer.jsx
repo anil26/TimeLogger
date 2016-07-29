@@ -1,15 +1,6 @@
 'use strict'
 import * as loggerConstants from '../constants/loggerconstants';
 import { currentYear , currentMonth } from '../helper';
-// LOGIN_FAILURE,
-//   LOGIN_SUCCESSFULL,
-//   REQUEST_LOGIN,
-//   SET_CURRENT_MONTH,
-//   SET_CURRENT_DATA,
-//   SET_CURRENT_YEAR,
-//   SET_CURRENT_USER,
-//   SET_TOKEN,
-//   REMOVE_TOKEN
 var initialstate={
   currentMonth : currentMonth(),
   currentYear : currentYear(),
@@ -48,6 +39,19 @@ const loggerReducer=(state=initialstate,action)=>{
       case loggerConstants.PUSH_DATA :
         var object=Object.assign({},state);
         object.items[action.payload.data.key]=action.payload.data.booking;
+        object.flag =!object.flag
+        return object;
+      case loggerConstants.REMOVE_DATA :
+        var object=Object.assign({},state);
+        var itemObject=object.items;
+        object.flag=!object.flag;
+        if(itemObject){
+          delete itemObject[action.payload.data];
+        }
+        return object;
+      case loggerConstants.SET_CURRENT_YEAR :
+        var object=Object.assign({},state);
+        object.currentYear=action.year;
         return object;
       default :
       return state;

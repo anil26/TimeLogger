@@ -48,11 +48,11 @@ const UserLogin = React.createClass({
   }
 });
 
-
 const mapStateToProps = (state) => ({
   auth : state.auth,
   statusText : state.statusText
 });
+
 
 const mapDispatchToProps = (dispatch) => ({
   actions : bindActionCreators(loggerActionCreators, dispatch)

@@ -34,7 +34,8 @@ window.___INITIAL_STATE__={
   items : [],
   users : [],
   auth : null,
-  statusText :''
+  statusText :'',
+  flag : true
 }
 
 const middlewares = [thunk];

@@ -5,8 +5,11 @@ import React from 'react'
 import ReactDOM from 'react-dom';
 import { Modal, ModalBody, ModalFooter ,PageHeader,ModalTitle, ModalHeader,Form, Button,FormGroup,FormControl, ControlLabel} from 'react-bootstrap';
 import DatePicker  from 'react-bootstrap-date-picker';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as loggerActionCreators from '../actions/loggeractions';
 
-class TimeLine extends React.Component{
+class MyTimeLine extends React.Component{
   constructor(props){
     super(props);
       var value = (new Date()).toISOString();
@@ -15,26 +18,33 @@ class TimeLine extends React.Component{
       value : value,
       value1 : value,
       remove : false,
-      itemid : null,
+      itemId : null,
       items : {},
       groups: {}
-    }
+  }
     this.createItems=this.createItems.bind(this);
     this.createGroups=this.createGroups.bind(this);
+    this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
   }
-  componentWillReceiveProps(nextProps){
-    console.log(nextProps);
-    console.log("nextprops received");
-    this.setState({
-      items : nextProps.items,
-      groups : nextProps.groups
-    })
-  }
+  // componentWillReceiveProps(nextProps){
+  //    console.log("coming nextprops");
+  //   console.log(nextProps);
+  //   this.setState({
+  //     items : nextProps.items,
+  //     groups : nextProps.groups,
+  //     flag : nextProps.flag
+  //   })
+  // }
+
+
   handleChange(value) {
      this.setState({
       value : value
     });
   }
+  forceUpdateHandler() {
+      this.forceUpdate();
+   };
   createItems(items){
     var items=items;
     console.log("call createitems");
@@ -52,12 +62,10 @@ class TimeLine extends React.Component{
       obj.canResize=false;
       itemArray.push(obj);
   }
-    return itemArray;
+  return itemArray;
   }
   createGroups(groups){
-    console.log("call creategroups");
-
-    // var users=this.state.groups;
+    console.log("rendering creategroups");
     var users=groups;
     var groupsArray=[];
     for(var props in users){
@@ -79,20 +87,21 @@ class TimeLine extends React.Component{
   }
   onItemClick(itemId,key){
     var that=this;
+    debugger;
     this.setState({
       remove : true,
-      itemid : itemId
+      itemId : itemId
+    },function(){
+      that.open();
     });
-    this.open();
-  }
 
+  }
   close() {
     this.setState({
       showModal: false,
       remove : false
      });
   }
-
   open() {
     this.setState({ showModal: true });
   }
@@ -106,18 +115,20 @@ class TimeLine extends React.Component{
     var toTimeString=this.refs.to.getValue();
     var toTime=new Date(toTimeString);
     var toTimeInISO=toTime.toISOString();
-    this.props.setSchedule(year,fromTimeInISO,toTimeInISO,hours,projectName,this.state.groupId);
+    this.props.actions.setSchedule(year,fromTimeInISO,toTimeInISO,hours,projectName,this.state.groupId);
     this.setState({
       showModal : false
     });
   }
   onRemove(){
-    var itemid=this.state.itemid;
-
+    var itemid=this.state.itemId;
+    this.props.actions.removeSchedule(itemid);
+    this.setState({
+      showModal : false
+    });
   }
 
   onCanvasClick(groupId, time, event){
-    console.log("clicked canvas");
     var that=this;
     this.setState({
       groupId : groupId,
@@ -129,13 +140,14 @@ class TimeLine extends React.Component{
     });
   }
   render(){
+    debugger;
     return (
       <div>
         <PageHeader>TimeLogger App</PageHeader>
-        <Timeline groups={this.createGroups(this.state.groups)}
-              items={this.createItems(this.state.items)}
-              defaultTimeStart={moment().add(0, 'years')}
-              defaultTimeEnd={moment().add(1, 'years')}
+        <Timeline groups={this.createGroups(this.props.users)}
+              items={this.createItems(this.props.items)}
+              defaultTimeStart={moment().year(this.props.currentYear).month(1).date(1)}
+              defaultTimeEnd={moment().year(this.props.currentYear).month(12).date(31)}
               sidebarWidth={200}
               lineHeight={50}
               minZoom={24*60*60*1000}
@@ -144,6 +156,7 @@ class TimeLine extends React.Component{
               canChangeGroup={false}
               onItemClick={this.onItemClick.bind(this)}
               onCanvasClick={this.onCanvasClick.bind(this)}
+
         />
         <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
           <ModalHeader closeButton>
@@ -179,4 +192,24 @@ class TimeLine extends React.Component{
     );
   }
 }
-export default TimeLine;
+
+const mapStateToProps = (state) => {
+  console.log("changed");
+  return {
+    auth : state.auth,
+    data: state.data,
+    statusText : state.statusText,
+    items : state.items,
+    users : state.users,
+    currentYear : state.currentYear,
+    flag : true
+  };
+};
+
+
+const mapDispatchToProps = (dispatch) => ({
+  actions : bindActionCreators(loggerActionCreators, dispatch)
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyTimeLine);

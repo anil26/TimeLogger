@@ -2,18 +2,6 @@
 import * as loggerConstants from '../constants/loggerconstants';
 import { browserHistory } from 'react-router';
 
-// LOGIN_FAILURE,
-//   LOGIN_SUCCESSFULL,
-//   REQUEST_LOGIN,
-//   SET_CURRENT_MONTH,
-//   SET_CURRENT_DATA,
-//   SET_CURRENT_YEAR,
-//   SET_CURRENT_USER,
-//   SET_TOKEN,
-//   REMOVE_TOKEN,
-//   REMOVE_DATA,
-//   LOGOUT,
-//   SET_USERS
 const loginRequest=()=>{
   return {
     type : loggerConstants.REQUEST_LOGIN
@@ -70,6 +58,7 @@ const setUsers=(data)=>{
 }
 
 const RemoveData=(data)=>{
+  debugger;
   return {
     type : loggerConstants.REMOVE_DATA,
     payload : {
@@ -91,7 +80,6 @@ const login=(email,password)=>{
   }
 
 }
-
 const setSchedule=(year,fromTimeInISO,toTimeInISO,hours,projectName,groupId)=>{
   return function(dispatch){
     var bookingToBeSet={
@@ -116,6 +104,8 @@ const setSchedule=(year,fromTimeInISO,toTimeInISO,hours,projectName,groupId)=>{
             "group": groupId
           }
         }
+        dispatch(pushData(obj));
+        dispatch(getItems(year));
       }).
       catch(function(error){
         console.log(error);
@@ -125,7 +115,14 @@ const setSchedule=(year,fromTimeInISO,toTimeInISO,hours,projectName,groupId)=>{
 
 
 const removeSchedule=(itemId)=>{
+    return function(dispatch){
+      firebase.database().ref('/year'+ "/" + "2016/" + itemId).remove().then(function(){
+        debugger;
+        dispatch(RemoveData(itemId));
+        dispatch(getItems("2016"));
+      });
 
+    }
 }
 
 const getItems=(year)=>{
@@ -152,12 +149,18 @@ const getUsers=()=>{
   }
 }
 
+const setCurrentYear=(year)=>{
+  return {
+    type : loggerConstants.SET_CURRENT_YEAR,
+    year : year
+  }
+}
+
 const logout=()=>{
   return function(dispatch){
     firebase.auth().signOut().then(function() {
     dispatch(removeToken());
     browserHistory.push('/login');
-
   }, function(error) {
     console.log(error)
   });
@@ -170,5 +173,6 @@ export {
   setSchedule,
   removeSchedule,
   getUsers,
-  getItems
+  getItems,
+  setCurrentYear
 }
