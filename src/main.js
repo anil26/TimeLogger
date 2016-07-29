@@ -17,16 +17,6 @@ import { getUsers } from './actions/loggeractions';
 const MOUNT_NODE = document.getElementById('root')
 
 
-// var indexToMonthMap=["January","February","March","April","May","June","July","August","September","October","November","December"];
-// var currentDate=new Date();
-// var currentYear=currentDate.getFullYear();
-// var currentMonth=currentDate.getMonth();
-// var database=firebase.database();
-
-// database.ref('/users').once('value').then(function(snapshot){
-//   console.log(snapshot.val());
-// })
-
 window.___INITIAL_STATE__={
   currentMonth : currentMonth(),
   currentYear : currentYear(),
@@ -42,6 +32,5 @@ const middlewares = [thunk];
 const middlewareEnhancer = applyMiddleware(...middlewares);
 const enhancers = compose(middlewareEnhancer,window.devToolsExtension ? window.devToolsExtension() : f => f );
 const store = createStore(loggerReducer, window.__INITIAL_STATE__, enhancers);
-// store.dispatch(getUsers());
-debugger;
+
 ReactDOM.render(<Root store={store}/>,document.getElementById('root'));

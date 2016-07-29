@@ -25,17 +25,8 @@ class MyTimeLine extends React.Component{
     this.createItems=this.createItems.bind(this);
     this.createGroups=this.createGroups.bind(this);
     this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
-  }
-  // componentWillReceiveProps(nextProps){
-  //    console.log("coming nextprops");
-  //   console.log(nextProps);
-  //   this.setState({
-  //     items : nextProps.items,
-  //     groups : nextProps.groups,
-  //     flag : nextProps.flag
-  //   })
-  // }
 
+  }
 
   handleChange(value) {
      this.setState({
@@ -138,6 +129,7 @@ class MyTimeLine extends React.Component{
       that.open();
     });
   }
+
   render(){
     var minTime = moment().year(this.props.currentYear).month(1).date(1);
     var maxTime = moment().year(this.props.currentYear).month(12).date(31);
@@ -158,6 +150,7 @@ class MyTimeLine extends React.Component{
               onCanvasClick={this.onCanvasClick.bind(this)}
               visibleTimeStart={moment().year(this.props.currentYear).month(1).date(1)}
               visibleTimeEnd={moment().year(this.props.currentYear).month(12).date(31)}
+
 
         />
         <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
