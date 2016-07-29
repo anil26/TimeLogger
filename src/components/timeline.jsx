@@ -38,7 +38,6 @@ class MyTimeLine extends React.Component{
    };
   createItems(items){
     var items=items;
-    console.log("call createitems");
     console.log(items);
     var  itemArray=[];
     for(var props in items){
@@ -56,7 +55,6 @@ class MyTimeLine extends React.Component{
   return itemArray;
   }
   createGroups(groups){
-    console.log("rendering creategroups");
     var users=groups;
     var groupsArray=[];
     for(var props in users){
@@ -148,8 +146,7 @@ class MyTimeLine extends React.Component{
               canChangeGroup={false}
               onItemClick={this.onItemClick.bind(this)}
               onCanvasClick={this.onCanvasClick.bind(this)}
-              visibleTimeStart={moment().year(this.props.currentYear).month(1).date(1)}
-              visibleTimeEnd={moment().year(this.props.currentYear).month(12).date(31)}
+
 
 
         />
