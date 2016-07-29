@@ -149,10 +149,24 @@ const getUsers=()=>{
   }
 }
 
-const setCurrentYear=(year)=>{
+const setCurrentYeaAction=(year)=>{
   return {
     type : loggerConstants.SET_CURRENT_YEAR,
     year : year
+  }
+}
+
+
+const setCurrentYear=(year)=>{
+  return function(dispatch){
+    firebase.database().ref('/year'+ "/"+year).once('value').then(function(snapshot){
+      var items=snapshot.val();
+      dispatch(setData(items));
+      dispatch(setCurrentYeaAction(year));
+    }).
+    catch(function(error){
+      console.log("error");
+    });
   }
 }
 

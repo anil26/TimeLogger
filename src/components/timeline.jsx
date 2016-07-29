@@ -87,7 +87,6 @@ class MyTimeLine extends React.Component{
   }
   onItemClick(itemId,key){
     var that=this;
-    debugger;
     this.setState({
       remove : true,
       itemId : itemId
@@ -140,7 +139,8 @@ class MyTimeLine extends React.Component{
     });
   }
   render(){
-    debugger;
+    var minTime = moment().year(this.props.currentYear).month(1).date(1);
+    var maxTime = moment().year(this.props.currentYear).month(12).date(31);
     return (
       <div>
         <PageHeader>TimeLogger App</PageHeader>
@@ -156,6 +156,8 @@ class MyTimeLine extends React.Component{
               canChangeGroup={false}
               onItemClick={this.onItemClick.bind(this)}
               onCanvasClick={this.onCanvasClick.bind(this)}
+              visibleTimeStart={moment().year(this.props.currentYear).month(1).date(1)}
+              visibleTimeEnd={moment().year(this.props.currentYear).month(12).date(31)}
 
         />
         <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
@@ -194,7 +196,6 @@ class MyTimeLine extends React.Component{
 }
 
 const mapStateToProps = (state) => {
-  console.log("changed");
   return {
     auth : state.auth,
     data: state.data,
