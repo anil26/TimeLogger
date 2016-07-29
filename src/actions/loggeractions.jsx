@@ -1,6 +1,7 @@
 'use strict'
 import * as loggerConstants from '../constants/loggerconstants';
 import { browserHistory } from 'react-router';
+import { currentYear } from '../helper';
 
 const loginRequest=()=>{
   return {
@@ -73,7 +74,7 @@ const login=(email,password)=>{
     firebase.auth().signInWithEmailAndPassword(email,password).then(function(data){
       dispatch(loginSuccessfull(data));
       dispatch(getUsers());
-      dispatch(getItems("2016"));
+      dispatch(getItems(currentYear()));
     }).catch(function(error){
        dispatch(loginFailure(error));
     })
@@ -114,12 +115,12 @@ const setSchedule=(year,fromTimeInISO,toTimeInISO,hours,projectName,groupId)=>{
 }
 
 
-const removeSchedule=(itemId)=>{
+const removeSchedule=(itemId,year)=>{
     return function(dispatch){
-      firebase.database().ref('/year'+ "/" + "2016/" + itemId).remove().then(function(){
+      firebase.database().ref('/year'+ "/" + year + "/" + itemId).remove().then(function(){
         debugger;
         dispatch(RemoveData(itemId));
-        dispatch(getItems("2016"));
+        dispatch(getItems(year));
       });
 
     }

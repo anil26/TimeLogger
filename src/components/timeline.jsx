@@ -110,7 +110,7 @@ class MyTimeLine extends React.Component{
   }
   onRemove(){
     var itemid=this.state.itemId;
-    this.props.actions.removeSchedule(itemid);
+    this.props.actions.removeSchedule(itemid,this.props.currentYear);
     this.setState({
       showModal : false
     });
