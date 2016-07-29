@@ -114,11 +114,9 @@ const setSchedule=(year,fromTimeInISO,toTimeInISO,hours,projectName,groupId)=>{
   }
 }
 
-
 const removeSchedule=(itemId,year)=>{
     return function(dispatch){
       firebase.database().ref('/year'+ "/" + year + "/" + itemId).remove().then(function(){
-        debugger;
         dispatch(RemoveData(itemId));
         dispatch(getItems(year));
       });

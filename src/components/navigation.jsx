@@ -10,10 +10,9 @@ class Navigation extends React.Component{
       if(this.props.auth!=null){
         return (
           <div className="navclass">
-        <YearDropDown setCurrentYear={this.props.setCurrentYear}/>
-
-        <LogOut logout={this.props.logout}/>
-      </div>
+            <YearDropDown setCurrentYear={this.props.setCurrentYear}/>
+            <LogOut logout={this.props.logout}/>
+          </div>
         );
       }
       else {
